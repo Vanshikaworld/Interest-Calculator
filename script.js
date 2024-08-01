@@ -17,11 +17,11 @@ function calculateInterest() {
         return;
     }
 
-    // Calculate the exact number of days between the given and repayment dates
+    // Calculate the number of days between the given and repayment dates
     const daysBetween = Math.floor((dateRepayment - dateGiven) / (1000 * 60 * 60 * 24));
 
-    // Convert the days to months with fractional months
-    const totalMonths = calculateTotalMonths(daysBetween);
+    // Convert days directly for interest calculation
+    const totalMonths = daysBetween / 30;
 
     // Monthly interest calculation
     const interestAmount = amount * percentage * totalMonths;
@@ -40,14 +40,6 @@ function calculateInterest() {
         "Interest Amount": interestAmount.toFixed(2),
         "Total Amount to be Repaid": totalAmount.toFixed(2)
     });
-}
-
-// Function to convert total days to exact months and fractional months
-function calculateTotalMonths(days) {
-    const averageDaysInMonth = 30;
-    const months = Math.floor(days / averageDaysInMonth);
-    const fractionOfMonth = (days % averageDaysInMonth) / averageDaysInMonth;
-    return months + fractionOfMonth;
 }
 
 function exportToExcel() {
@@ -80,16 +72,14 @@ function restartCalculation() {
 }
 
 function exitCalculator() {
-    exportToExcel(); // Export all entries before exiting
-    // Clear form and entries
-    document.getElementById('calculator-form').reset();
-    entries = [];
     isCalculating = false; // Disable further calculations
-    alert('Exited and exported all entries.');
+    alert('Exited. You can now export your data if needed.');
 }
 
 function continueCalculation() {
-    // Simply clear the results for the next calculation
+    // Clear the input fields
+    document.getElementById('calculator-form').reset();
+    // Clear the results for the next calculation
     document.getElementById('interestAmount').textContent = '0';
     document.getElementById('totalAmount').textContent = '0';
 }
