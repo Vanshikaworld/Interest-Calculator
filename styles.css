@@ -47,41 +47,11 @@ button {
     border: none;
     border-radius: 6px;
     cursor: pointer;
-    margin-bottom: 10px; /* Add spacing between buttons */
+    margin: 5px 0;
 }
 
 button:hover {
     background-color: #1565C0;
-}
-
-/* Additional styling for export button */
-.export-button {
-    margin-bottom: 0; /* No margin at the bottom for the last button */
-}
-
-/* Styles for new buttons */
-.restart-button {
-    background-color: #4CAF50; /* Green */
-}
-
-.restart-button:hover {
-    background-color: #388E3C;
-}
-
-.exit-button {
-    background-color: #F44336; /* Red */
-}
-
-.exit-button:hover {
-    background-color: #C62828;
-}
-
-.continue-button {
-    background-color: #FF9800; /* Orange */
-}
-
-.continue-button:hover {
-    background-color: #F57C00;
 }
 
 #results {
