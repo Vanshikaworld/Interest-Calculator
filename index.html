@@ -21,11 +21,11 @@
             <label for="dateRepayment">Date of Repayment:</label>
             <input type="date" id="dateRepayment" required>
             
-            <label for="percentage">Percentage Given On:</label>
+            <label for="percentage">Monthly Interest Rate (%):</label>
             <input type="number" id="percentage" step="0.01" required>
             
             <button type="button" onclick="calculateInterest()">Calculate</button>
-            <button type="button" onclick="exportToExcel()">Export to Excel</button>
+            <button type="button" onclick="exportToExcel()" class="export-button">Export to Excel</button>
         </form>
         
         <div id="results">
