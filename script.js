@@ -1,4 +1,5 @@
 // script.js
+
 function calculateInterest() {
     // Get values from the input fields
     const amount = parseFloat(document.getElementById('amount').value);
