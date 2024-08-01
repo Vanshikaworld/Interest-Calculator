@@ -1,7 +1,10 @@
 // script.js
 let entries = [];
+let isCalculating = true;
 
 function calculateInterest() {
+    if (!isCalculating) return;
+
     // Get values from the input fields
     const amount = parseFloat(document.getElementById('amount').value);
     const dateGiven = new Date(document.getElementById('dateGiven').value);
@@ -14,15 +17,14 @@ function calculateInterest() {
         return;
     }
 
-    // Calculate the number of months between the given and repayment dates
-    const timeDifference = dateRepayment - dateGiven;
-    const days = timeDifference / (1000 * 60 * 60 * 24);
-    const monthsBetween = (dateRepayment.getFullYear() - dateGiven.getFullYear()) * 12 +
-                           (dateRepayment.getMonth() - dateGiven.getMonth()) +
-                           (dateRepayment.getDate() >= dateGiven.getDate() ? 0 : -1);
+    // Calculate the exact number of days between the given and repayment dates
+    const daysBetween = Math.floor((dateRepayment - dateGiven) / (1000 * 60 * 60 * 24));
+
+    // Convert the days to months with fractional months
+    const totalMonths = calculateTotalMonths(daysBetween);
 
     // Monthly interest calculation
-    const interestAmount = amount * percentage * monthsBetween;
+    const interestAmount = amount * percentage * totalMonths;
     const totalAmount = amount + interestAmount;
 
     // Display the results
@@ -38,6 +40,14 @@ function calculateInterest() {
         "Interest Amount": interestAmount.toFixed(2),
         "Total Amount to be Repaid": totalAmount.toFixed(2)
     });
+}
+
+// Function to convert total days to exact months and fractional months
+function calculateTotalMonths(days) {
+    const averageDaysInMonth = 30;
+    const months = Math.floor(days / averageDaysInMonth);
+    const fractionOfMonth = (days % averageDaysInMonth) / averageDaysInMonth;
+    return months + fractionOfMonth;
 }
 
 function exportToExcel() {
@@ -65,17 +75,21 @@ function restartCalculation() {
     document.getElementById('calculator-form').reset();
     document.getElementById('interestAmount').textContent = '0';
     document.getElementById('totalAmount').textContent = '0';
+    entries = []; // Clear all previous entries
+    isCalculating = true; // Enable calculations
 }
 
 function exitCalculator() {
     exportToExcel(); // Export all entries before exiting
-    // Optionally, clear form or perform other actions
+    // Clear form and entries
     document.getElementById('calculator-form').reset();
     entries = [];
+    isCalculating = false; // Disable further calculations
     alert('Exited and exported all entries.');
 }
 
 function continueCalculation() {
-    // Simply reset the form for the next calculation
-    document.getElementById('calculator-form').reset();
+    // Simply clear the results for the next calculation
+    document.getElementById('interestAmount').textContent = '0';
+    document.getElementById('totalAmount').textContent = '0';
 }
