@@ -41,12 +41,17 @@ input {
 }
 
 button {
-    padding: 15px;
+    padding: 10px;
     background-color: #2196F3;
     color: #fff;
     border: none;
     border-radius: 6px;
     cursor: pointer;
+    margin-bottom: 10px; /* Add spacing between buttons */
+}
+
+button:last-of-type {
+    margin-bottom: 0; /* No margin for the last button */
 }
 
 button:hover {
