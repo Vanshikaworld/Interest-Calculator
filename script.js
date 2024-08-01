@@ -1,4 +1,5 @@
 // script.js
+let entries = [];
 
 function calculateInterest() {
     // Get values from the input fields
@@ -27,23 +28,54 @@ function calculateInterest() {
     // Display the results
     document.getElementById('interestAmount').textContent = interestAmount.toFixed(2);
     document.getElementById('totalAmount').textContent = totalAmount.toFixed(2);
-}
 
-function exportToExcel() {
-    // Create a workbook and add a worksheet
-    const wb = XLSX.utils.book_new();
-    const ws = XLSX.utils.json_to_sheet([{
-        "Principal": document.getElementById('amount').value,
+    // Save the entry
+    entries.push({
+        Principal: amount,
         "Date Given On": document.getElementById('dateGiven').value,
         "Date of Repayment": document.getElementById('dateRepayment').value,
         "Monthly Interest Rate": document.getElementById('percentage').value,
-        "Interest Amount": document.getElementById('interestAmount').textContent,
-        "Total Amount to be Repaid": document.getElementById('totalAmount').textContent
-    }]);
+        "Interest Amount": interestAmount.toFixed(2),
+        "Total Amount to be Repaid": totalAmount.toFixed(2)
+    });
+}
+
+function exportToExcel() {
+    if (entries.length === 0) {
+        alert('No entries to export.');
+        return;
+    }
+
+    // Create a workbook and add a worksheet
+    const wb = XLSX.utils.book_new();
+    const ws = XLSX.utils.json_to_sheet(entries);
 
     // Append the worksheet to the workbook
-    XLSX.utils.book_append_sheet(wb, ws, "Interest Calculation");
+    XLSX.utils.book_append_sheet(wb, ws, "Interest Calculations");
 
     // Generate a download link and trigger it
-    XLSX.writeFile(wb, "Interest_Calculation.xlsx");
+    XLSX.writeFile(wb, "Interest_Calculations.xlsx");
+
+    // Clear entries after exporting
+    entries = [];
+}
+
+function restartCalculation() {
+    // Reset all fields and results
+    document.getElementById('calculator-form').reset();
+    document.getElementById('interestAmount').textContent = '0';
+    document.getElementById('totalAmount').textContent = '0';
+}
+
+function exitCalculator() {
+    exportToExcel(); // Export all entries before exiting
+    // Optionally, clear form or perform other actions
+    document.getElementById('calculator-form').reset();
+    entries = [];
+    alert('Exited and exported all entries.');
+}
+
+function continueCalculation() {
+    // Simply reset the form for the next calculation
+    document.getElementById('calculator-form').reset();
 }
