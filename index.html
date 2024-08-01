@@ -5,8 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Interest Calculator</title>
     <link rel="stylesheet" href="styles.css">
-    <!-- Include SheetJS library -->
-    <script src="https://cdn.jsdelivr.net/npm/xlsx@0.17.0/dist/xlsx.full.min.js"></script>
 </head>
 <body>
     <div class="container">
@@ -14,28 +12,28 @@
         <form id="calculator-form">
             <label for="amount">Amount Given:</label>
             <input type="number" id="amount" required>
-            
+
             <label for="dateGiven">Date Given On:</label>
             <input type="date" id="dateGiven" required>
-            
+
             <label for="dateRepayment">Date of Repayment:</label>
             <input type="date" id="dateRepayment" required>
-            
-            <label for="percentage">Monthly Interest Rate (%):</label>
+
+            <label for="percentage">Percentage Given On:</label>
             <input type="number" id="percentage" step="0.01" required>
-            
+
             <button type="button" onclick="calculateInterest()">Calculate</button>
-            <button type="button" onclick="exportToExcel()" class="export-button">Export to Excel</button>
-            <button type="button" onclick="restartCalculation()">Restart</button>
-            <button type="button" onclick="exitCalculator()">Exit</button>
             <button type="button" onclick="continueCalculation()">Continue</button>
+            <button type="button" onclick="exitCalculator()">Exit</button>
+            <button type="button" onclick="restartCalculation()">Restart</button>
+            <button type="button" onclick="exportToExcel()">Export to Excel</button>
         </form>
-        
         <div id="results">
-            <p>Interest Amount: <span id="interestAmount">0</span></p>
-            <p>Total Amount to be Repaid: <span id="totalAmount">0</span></p>
+            <p><strong>Interest Amount:</strong> $<span id="interestAmount">0</span></p>
+            <p><strong>Total Amount to be Repaid:</strong> $<span id="totalAmount">0</span></p>
         </div>
     </div>
     <script src="script.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.17.0/xlsx.full.min.js"></script>
 </body>
 </html>
