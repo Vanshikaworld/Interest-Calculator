@@ -91,3 +91,4 @@ function continueCalculation() {
     document.getElementById('totalAmount').textContent = '0';
     document.getElementById('totalPeriod').textContent = '';
 }
+
