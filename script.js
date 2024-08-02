@@ -1,4 +1,3 @@
-// script.js
 let entries = [];
 let isCalculating = true;
 
@@ -9,7 +8,7 @@ function calculateInterest() {
     const amount = parseFloat(document.getElementById('amount').value);
     const dateGiven = new Date(document.getElementById('dateGiven').value);
     const dateRepayment = new Date(document.getElementById('dateRepayment').value);
-    const percentage = parseFloat(document.getElementById('percentage').value); // Monthly rate in percentage
+    const percentage = parseFloat(document.getElementById('percentage').value); // Monthly interest rate
 
     // Validate the input values
     if (isNaN(amount) || isNaN(percentage) || dateGiven > dateRepayment) {
@@ -21,29 +20,31 @@ function calculateInterest() {
     const timeDifference = dateRepayment.getTime() - dateGiven.getTime();
     const daysBetween = Math.floor(timeDifference / (1000 * 60 * 60 * 24));
 
-    // Calculate months and days
-    const totalMonths = Math.floor(daysBetween / 30);
-    const remainingDays = daysBetween % 30;
+    // Calculate total months and extra days
+    const months = Math.floor(daysBetween / 30);
+    const extraDays = daysBetween % 30;
 
-    // Total time in months
-    const totalTime = totalMonths + (remainingDays / 30);
+    // Calculate total time in months
+    const totalTime = months + (extraDays / 30);
 
-    // Calculate interest
+    // Monthly interest calculation
     const interestAmount = amount * totalTime * (percentage / 100);
     const totalAmount = amount + interestAmount;
 
     // Display the results
     document.getElementById('interestAmount').textContent = interestAmount.toFixed(2);
     document.getElementById('totalAmount').textContent = totalAmount.toFixed(2);
+    document.getElementById('totalPeriod').textContent = `${months} months ${extraDays} days`;
 
     // Save the entry
     entries.push({
         Principal: amount,
         "Date Given On": document.getElementById('dateGiven').value,
         "Date of Repayment": document.getElementById('dateRepayment').value,
-        "Monthly Interest Rate": percentage,
+        "Monthly Interest Rate": percentage.toFixed(2),
         "Interest Amount": interestAmount.toFixed(2),
-        "Total Amount to be Repaid": totalAmount.toFixed(2)
+        "Total Amount to be Repaid": totalAmount.toFixed(2),
+        "Total Period": `${months} months ${extraDays} days`
     });
 }
 
@@ -72,6 +73,7 @@ function restartCalculation() {
     document.getElementById('calculator-form').reset();
     document.getElementById('interestAmount').textContent = '0';
     document.getElementById('totalAmount').textContent = '0';
+    document.getElementById('totalPeriod').textContent = '';
     entries = []; // Clear all previous entries
     isCalculating = true; // Enable calculations
 }
@@ -87,4 +89,5 @@ function continueCalculation() {
     // Clear the results for the next calculation
     document.getElementById('interestAmount').textContent = '0';
     document.getElementById('totalAmount').textContent = '0';
+    document.getElementById('totalPeriod').textContent = '';
 }
