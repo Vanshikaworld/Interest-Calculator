@@ -11,10 +11,10 @@ body {
 
 .container {
     background-color: #fff;
-    padding: 15px;
+    padding: 20px;
     border-radius: 8px;
     box-shadow: 0 0 8px rgba(0, 0, 0, 0.1);
-    max-width: 350px;
+    max-width: 300px; /* Decreased size of the container */
     width: 100%;
 }
 
@@ -45,15 +45,16 @@ button {
     border: none;
     border-radius: 6px;
     cursor: pointer;
-    margin-bottom: 10px; /* Added margin between buttons */
+    margin-bottom: 10px; /* Margin between buttons */
 }
 
+/* Button colors */
 #calculate {
     background-color: #4CAF50; /* Green */
 }
 
 #calculate:hover {
-    background-color: #388E3C;
+    background-color: #388E3C; /* Darker Green */
 }
 
 #continue {
@@ -61,23 +62,23 @@ button {
 }
 
 #continue:hover {
-    background-color: #F57C00;
+    background-color: #F57C00; /* Darker Orange */
 }
 
 #restart {
-    background-color: #4CAF50; /* Green */
-}
-
-#restart:hover {
-    background-color: #388E3C;
-}
-
-#export {
     background-color: #2196F3; /* Blue */
 }
 
+#restart:hover {
+    background-color: #1976D2; /* Darker Blue */
+}
+
+#export {
+    background-color: #FFC107; /* Amber */
+}
+
 #export:hover {
-    background-color: #1565C0;
+    background-color: #FFA000; /* Darker Amber */
 }
 
 #exit {
@@ -85,7 +86,7 @@ button {
 }
 
 #exit:hover {
-    background-color: #C62828;
+    background-color: #C62828; /* Darker Red */
 }
 
 #results {
