@@ -1,31 +1,49 @@
 let entries = [];
 let isCalculating = true;
 
+function calculateDateDifference(startDate, endDate) {
+    // Ensure startDate and endDate are Date objects
+    startDate = new Date(startDate);
+    endDate = new Date(endDate);
+
+    // Calculate the number of months and days
+    let yearsDiff = endDate.getFullYear() - startDate.getFullYear();
+    let monthsDiff = endDate.getMonth() - startDate.getMonth() + (yearsDiff * 12);
+    let daysDiff = endDate.getDate() - startDate.getDate();
+
+    if (daysDiff < 0) {
+        // Adjust the month difference if daysDiff is negative
+        let previousMonth = new Date(endDate.getFullYear(), endDate.getMonth() - 1, startDate.getDate());
+        daysDiff += new Date(endDate.getFullYear(), endDate.getMonth(), 0).getDate(); // Get days in the previous month
+        monthsDiff--;
+    }
+
+    return {
+        months: monthsDiff,
+        days: daysDiff
+    };
+}
+
 function calculateInterest() {
     if (!isCalculating) return;
 
     // Get values from the input fields
     const amount = parseFloat(document.getElementById('amount').value);
-    const dateGiven = new Date(document.getElementById('dateGiven').value);
-    const dateRepayment = new Date(document.getElementById('dateRepayment').value);
+    const dateGiven = document.getElementById('dateGiven').value;
+    const dateRepayment = document.getElementById('dateRepayment').value;
     const percentage = parseFloat(document.getElementById('percentage').value); // Monthly interest rate
 
     // Validate the input values
-    if (isNaN(amount) || isNaN(percentage) || dateGiven > dateRepayment) {
+    if (isNaN(amount) || isNaN(percentage) || !dateGiven || !dateRepayment || new Date(dateGiven) > new Date(dateRepayment)) {
         alert('Please enter valid values.');
         return;
     }
 
-    // Calculate the number of days between the given and repayment dates
-    const timeDifference = dateRepayment.getTime() - dateGiven.getTime();
-    const daysBetween = Math.floor(timeDifference / (1000 * 60 * 60 * 24));
-
-    // Calculate total months and extra days
-    const months = Math.floor(daysBetween / 30);
-    const extraDays = daysBetween % 30;
+    // Calculate the difference between dates
+    const { months, days } = calculateDateDifference(dateGiven, dateRepayment);
 
     // Calculate total time in months
-    const totalTime = months + (extraDays / 30);
+    const totalTime = months + (days / 30);
 
     // Monthly interest calculation
     const interestAmount = amount * totalTime * (percentage / 100);
@@ -34,17 +52,17 @@ function calculateInterest() {
     // Display the results
     document.getElementById('interestAmount').textContent = interestAmount.toFixed(2);
     document.getElementById('totalAmount').textContent = totalAmount.toFixed(2);
-    document.getElementById('totalPeriod').textContent = `${months} months ${extraDays} days`;
+    document.getElementById('totalPeriod').textContent = `${months} months ${days} days`;
 
     // Save the entry
     entries.push({
         Principal: amount,
-        "Date Given On": document.getElementById('dateGiven').value,
-        "Date of Repayment": document.getElementById('dateRepayment').value,
+        "Date Given On": dateGiven,
+        "Date of Repayment": dateRepayment,
         "Monthly Interest Rate": percentage.toFixed(2),
         "Interest Amount": interestAmount.toFixed(2),
         "Total Amount to be Repaid": totalAmount.toFixed(2),
-        "Total Period": `${months} months ${extraDays} days`
+        "Total Period": `${months} months ${days} days`
     });
 }
 
@@ -91,4 +109,3 @@ function continueCalculation() {
     document.getElementById('totalAmount').textContent = '0';
     document.getElementById('totalPeriod').textContent = '';
 }
-
