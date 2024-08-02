@@ -18,13 +18,12 @@ function calculateInterest() {
     }
 
     // Calculate the number of days between the given and repayment dates
-    const daysBetween = Math.floor((dateRepayment - dateGiven) / (1000 * 60 * 60 * 24));
-
-    // Convert days directly for interest calculation
-    const totalMonths = daysBetween / 30;
+    const timeDifference = dateRepayment.getTime() - dateGiven.getTime();
+    const daysBetween = Math.floor(timeDifference / (1000 * 60 * 60 * 24));
+    const months = Math.floor(daysBetween / 30); // Convert days to months approximately
 
     // Monthly interest calculation
-    const interestAmount = amount * percentage * totalMonths;
+    const interestAmount = amount * percentage * months;
     const totalAmount = amount + interestAmount;
 
     // Display the results
