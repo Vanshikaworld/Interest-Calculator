@@ -52,24 +52,40 @@ button {
     background-color: #4CAF50; /* Green */
 }
 
+#calculate:hover {
+    background-color: #388E3C;
+}
+
 #continue {
-    background-color: #FFC107; /* Amber */
+    background-color: #FF9800; /* Orange */
+}
+
+#continue:hover {
+    background-color: #F57C00;
 }
 
 #restart {
-    background-color: #FF5722; /* Deep Orange */
+    background-color: #4CAF50; /* Green */
+}
+
+#restart:hover {
+    background-color: #388E3C;
 }
 
 #export {
     background-color: #2196F3; /* Blue */
 }
 
-#exit {
-    background-color: #9E9E9E; /* Grey */
+#export:hover {
+    background-color: #1565C0;
 }
 
-button:hover {
-    opacity: 0.8;
+#exit {
+    background-color: #F44336; /* Red */
+}
+
+#exit:hover {
+    background-color: #C62828;
 }
 
 #results {
