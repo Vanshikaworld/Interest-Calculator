@@ -9,7 +9,7 @@ function calculateInterest() {
     const amount = parseFloat(document.getElementById('amount').value);
     const dateGiven = new Date(document.getElementById('dateGiven').value);
     const dateRepayment = new Date(document.getElementById('dateRepayment').value);
-    const percentage = parseFloat(document.getElementById('percentage').value) / 100; // Convert percentage to decimal
+    const percentage = parseFloat(document.getElementById('percentage').value); // Monthly rate in percentage
 
     // Validate the input values
     if (isNaN(amount) || isNaN(percentage) || dateGiven > dateRepayment) {
@@ -20,10 +20,16 @@ function calculateInterest() {
     // Calculate the number of days between the given and repayment dates
     const timeDifference = dateRepayment.getTime() - dateGiven.getTime();
     const daysBetween = Math.floor(timeDifference / (1000 * 60 * 60 * 24));
-    const months = Math.floor(daysBetween / 30); // Convert days to months approximately
 
-    // Monthly interest calculation
-    const interestAmount = amount * percentage * months;
+    // Calculate months and days
+    const totalMonths = Math.floor(daysBetween / 30);
+    const remainingDays = daysBetween % 30;
+
+    // Total time in months
+    const totalTime = totalMonths + (remainingDays / 30);
+
+    // Calculate interest
+    const interestAmount = amount * totalTime * (percentage / 100);
     const totalAmount = amount + interestAmount;
 
     // Display the results
@@ -35,7 +41,7 @@ function calculateInterest() {
         Principal: amount,
         "Date Given On": document.getElementById('dateGiven').value,
         "Date of Repayment": document.getElementById('dateRepayment').value,
-        "Monthly Interest Rate": document.getElementById('percentage').value,
+        "Monthly Interest Rate": percentage,
         "Interest Amount": interestAmount.toFixed(2),
         "Total Amount to be Repaid": totalAmount.toFixed(2)
     });
